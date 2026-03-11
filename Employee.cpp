@@ -62,11 +62,12 @@ if(id==e[i].id){
         found=true;
         break;
 }
+}
 if(!found){
     cout<<"no record such found !!!!!:"<<endl;
 }
 }
-}
+
 else{
     cout<<"RECORD IS EMPTY"<<endl;
 }
@@ -228,4 +229,5 @@ while(1){
     goto start;
 }
     return 0;
+
 }

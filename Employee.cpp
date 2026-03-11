@@ -1,233 +1,234 @@
-#include<iostream>
-#include<string>
-#include<windows.h>
-#include<conio.h>
+#include <iostream>
+#include <string>
+#include <windows.h>
+#include <conio.h>
+
 using namespace std;
-struct emp{
-string name,id,address;
-int contact,salary;
+
+struct emp {
+    string name, id, address;
+    int contact, salary;
 };
+
 emp e[100];
-int total=0;
-void empData(){
-int choice;
-cout<<"How many Employees you want to enter?"<<endl;
-cin>>choice;
-for(int i=total;i<total+choice;i++){
-    cout<<"Enter data "<<i+1<<endl;
-    cout<<"EMPLOYEE NAME:"<<endl;
-    cin>>e[i].name;
-    cout<<"ID :"<<endl;
-    cin>>e[i].id;
-    cout<<"EMPLOYEE ADDRESS :"<<endl;
-    cin>>e[i].address;
-    cout<<"EMPLOYEE CONTACT INFO :"<<endl;
-    cin>>e[i].contact;
-    cout<<"SALARY IS :"<<endl;
-    cin>>e[i].salary;
-}
-total=total+choice;
-}
-void show(){
-if(total !=0){
-    for(int i=0; i<total;i++){
-        cout<<"DATA OF EMPLOYEE :"<<i+1<<endl;
-        cout<<"Employee Name :"<<e[i].name<<endl;
-        cout<<"ID :"<<e[i].id<<endl;
-        cout<<"Address is :"<<e[i].address<<endl;
-          cout<<"Contact Info is :"<<e[i].contact<<endl;
-        cout<<"Salary is :"<<e[i].salary<<endl;
-      
+int total = 0;
+
+// ---------------- ADD EMPLOYEE ----------------
+void empData() {
+    int choice;
+    cout << "How many employees do you want to enter? ";
+    cin >> choice;
+    cin.ignore();
+
+    if (total + choice > 100) {
+        cout << "Employee limit exceeded!\n";
+        return;
     }
 
-}  
-else{
-    cout<<"RECORD IS EMPTY"<<endl;
+    for (int i = total; i < total + choice; i++) {
+        cout << "\nEnter data for employee " << i + 1 << endl;
+
+        cout << "Employee Name: ";
+        getline(cin, e[i].name);
+
+        cout << "ID: ";
+        getline(cin, e[i].id);
+
+        cout << "Address: ";
+        getline(cin, e[i].address);
+
+        cout << "Contact: ";
+        cin >> e[i].contact;
+
+        cout << "Salary: ";
+        cin >> e[i].salary;
+        cin.ignore();
+    }
+    total += choice;
 }
+
+// ---------------- SHOW EMPLOYEES ----------------
+void show() {
+    if (total == 0) {
+        cout << "No records available.\n";
+        return;
+    }
+
+    for (int i = 0; i < total; i++) {
+        cout << "\nEmployee " << i + 1 << endl;
+        cout << "Name: " << e[i].name << endl;
+        cout << "ID: " << e[i].id << endl;
+        cout << "Address: " << e[i].address << endl;
+        cout << "Contact: " << e[i].contact << endl;
+        cout << "Salary: " << e[i].salary << endl;
+    }
 }
-void search(){
-if(total !=0){
+
+// ---------------- SEARCH EMPLOYEE ----------------
+void searchEmp() {
+    if (total == 0) {
+        cout << "No records available.\n";
+        return;
+    }
+
     string id;
-cout<<"Enter ID of search :"<<endl;
-cin>>id;
-bool found=false;
-for(int i=0;i<total ;i++){
-if(id==e[i].id){
-     cout<<"DATA OF EMPLOYEE :"<<i+1<<endl;
-        cout<<"Employee Name :"<<e[i].name<<endl;
-        cout<<"ID :"<<e[i].id<<endl;
-        cout<<"Address is :"<<e[i].address<<endl;
-          cout<<"Contact Info is :"<<e[i].contact<<endl;
-        cout<<"Salary is :"<<e[i].salary<<endl;
-        found=true;
-        break;
-}
-}
-if(!found){
-    cout<<"no record such found !!!!!:"<<endl;
-}
-}
+    cout << "Enter ID to search: ";
+    getline(cin, id);
 
-else{
-    cout<<"RECORD IS EMPTY"<<endl;
-}
-}
-void update(){
-if(total !=0){
-    string id;
-    bool found=false;
-cout<<"Enter ID to update :"<<endl;
-cin>>id;
-for(int i=0;i<total ;i++){
-if(id==e[i].id){
-    found=true;
-    cout<<"Previous Data"<<endl;
-     cout<<"DATA OF EMPLOYEE :"<<i+1<<endl;
-        cout<<"Employee Name :"<<e[i].name<<endl;
-        cout<<"ID :"<<e[i].id<<endl;
-        cout<<"Address is :"<<e[i].address<<endl;
-        cout<<"Contact Info is :"<<e[i].contact<<endl;
-        cout<<"Salary is :"<<e[i].salary<<endl;
-        
-        cout<<"\nEnter new Data"<<endl;
-
-    cout<<"EMPLOYEE NAME:"<<endl;
-    cin>>e[i].name;
-    cout<<"ID :"<<endl;
-    cin>>e[i].id;
-    cout<<"EMPLOYEE ADDRESS :"<<endl;
-    cin>>e[i].address;
-    cout<<"EMPLOYEE CONTACT INFO :"<<endl;
-    cin>>e[i].contact;
-    cout<<"SALARY IS :"<<endl;
-    cin>>e[i].salary;
-
-        break;
-}
-if(!found){
-    cout<<"no record such found !!!!!:"<<endl;
-}
-}
-} else{
- cout<<"YOUR RECORD IS EMPTY"<<endl;
-}
-}
-void deleteData(){
-if(total !=0){
-    char user;
-cout<<"PRESS 1 TO DELETE FULL RECORD"<<endl;
-cout<<"PRESS 2 TO DELETE SPECIFIC "<<endl;
-user=getch();
-if(user=='1'){
-    total=0;
-    cout<<"ALL DELETED...."<<endl;
-}else if(user=='2') {
- string id;
-cout<<"Enter ID to delete :"<<endl;
-cin>>id;
-for(int i=0;i<total;i++){
-    if(id==e[i].id){
-        for(int j=i;j<total;j++){
-
-      
-        e[j].name=e[j+1].name;
-         e[j].id=e[j+1].id;
-          e[j].address=e[j+1].address;
-           e[j].contact=e[j+1].contact;
-            e[j].salary=e[j+1].salary;
-            total--;
-            cout<<"DELETED"<<endl;
+    bool found = false;
+    for (int i = 0; i < total; i++) {
+        if (e[i].id == id) {
+            cout << "\nEmployee Found:\n";
+            cout << "Name: " << e[i].name << endl;
+            cout << "ID: " << e[i].id << endl;
+            cout << "Address: " << e[i].address << endl;
+            cout << "Contact: " << e[i].contact << endl;
+            cout << "Salary: " << e[i].salary << endl;
+            found = true;
             break;
         }
-if(i==total-1){
-    cout<<"no record ....."<<endl;
+    }
+
+    if (!found)
+        cout << "Employee not found!\n";
 }
+
+// ---------------- UPDATE EMPLOYEE ----------------
+void update() {
+    if (total == 0) {
+        cout << "No records available.\n";
+        return;
+    }
+
+    string id;
+    cout << "Enter ID to update: ";
+    getline(cin, id);
+
+    bool found = false;
+    for (int i = 0; i < total; i++) {
+        if (e[i].id == id) {
+            cout << "\nEnter new details:\n";
+
+            cout << "Employee Name: ";
+            getline(cin, e[i].name);
+
+            cout << "ID: ";
+            getline(cin, e[i].id);
+
+            cout << "Address: ";
+            getline(cin, e[i].address);
+
+            cout << "Contact: ";
+            cin >> e[i].contact;
+
+            cout << "Salary: ";
+            cin >> e[i].salary;
+            cin.ignore();
+
+            cout << "Record updated successfully.\n";
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+        cout << "Employee not found!\n";
+}
+
+// ---------------- DELETE EMPLOYEE ----------------
+void deleteData() {
+    if (total == 0) {
+        cout << "No records available.\n";
+        return;
+    }
+
+    cout << "Press 1 to delete all records\n";
+    cout << "Press 2 to delete specific record\n";
+    char ch = getch();
+
+    if (ch == '1') {
+        total = 0;
+        cout << "\nAll records deleted.\n";
+    }
+    else if (ch == '2') {
+        string id;
+        cout << "\nEnter ID to delete: ";
+        getline(cin, id);
+
+        bool found = false;
+        for (int i = 0; i < total; i++) {
+            if (e[i].id == id) {
+                for (int j = i; j < total - 1; j++) {
+                    e[j] = e[j + 1];
+                }
+                total--;
+                cout << "Record deleted successfully.\n";
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+            cout << "Employee not found!\n";
     }
 }
-}
 
+// ---------------- MAIN FUNCTION ----------------
+int main() {
+    string username, password;
+    string u, p;
 
-}else{
-    cout<<"NOT FOUND..."<<endl;
-}
+    cout << "EMPLOYEE MANAGEMENT SYSTEM\n";
+    cout << "\nSIGN UP\n";
+    cout << "Username: ";
+    cin >> username;
+    cout << "Password: ";
+    cin >> password;
 
+    cout << "\nCreating account";
+    for (int i = 0; i < 3; i++) {
+        cout << ".";
+        Sleep(700);
+    }
 
-}
-
-
-int main (){
-cout<<"\n\n\t\t  EMPLOYEE MANAGEMENT SYSTEM"<<endl;
-cout<<"\n\n\t\t SIGN UP...."<<endl;
-string userName;
-string password;
-string user1;
-string pass1;
-cout<<"\n\t\t ENTER USERNAME..: ";
-cin>>userName;
-cout<<"\n\t\t ENTER PASSWORD..: ";
-cin>>password;
-cout<<"\n\t\t ID IS CREATING PLEASE WAIT";
-for(int i=0 ;i<4;i++){
-    cout<<".";
-    Sleep(1000);
-}
-cout<<"\n\t\t ID CREATED SUCCESSFULLY"<<endl;
-system("CLS");
-start:
-system("CLS");
-cout<<"\n\n\t\t  EMPLOYEE MANAGEMENT SYSTEM"<<endl;
-cout<<"\n\n\t\t LOGIN "<<endl;
-cout<<"USERNAME : ";
-cin>>user1;
-cout<<"PASSWORD : ";
-cin>>pass1;
-if(user1==userName && pass1==password){
-system("CLS");
-char user;
-while(1){
-    cout<<"\n\nPRESS 1 TO ENTER DATA.."<<endl;
-    cout<<"PRESS 2 TO SHOW DATA.."<<endl;
-    cout<<"PRESS 3 TO SEARCH DATA.."<<endl;
-    cout<<"PRESS 4 TO UPDATE DATA.."<<endl;
-    cout<<"PRESS 5 TO DELETE DATA.."<<endl;
-    cout<<"PRESS 6 TO LOGOUT ..."<<endl;
-    cout<<"PRESS 7 TO EXIT."<<endl;
-    user=getch();
     system("CLS");
-    switch(user){
-        case '1':
-        empData();
-        break;
-        case '2':
-        show();
-        break;
-        case '3':
-        search();
-        break;
-        case '4':
-        update();
-        break;
-        case '5':
-        deleteData();
-        break;
-        case '6':
-        goto start;
-        break;
-        case '7':
-    exit(0);
-        default:
-        cout<<"\aINVALID INPUT"<<endl;
-    }
-}
-} else if(user1 !=userName){
-    cout<<"INCORECT USERNAME"<<endl;
-    Sleep(3000);
-    goto start;
-} else if(pass1 !=password){
-    cout<<"INCORECT PASSWORD"<<endl;
-    Sleep(3000);
-    goto start;
-}
-    return 0;
 
+    while (true) {
+        cout << "LOGIN\n";
+        cout << "Username: ";
+        cin >> u;
+        cout << "Password: ";
+        cin >> p;
+        cin.ignore();
+
+        if (u == username && p == password) {
+            system("CLS");
+            char choice;
+
+            while (true) {
+                cout << "\n1. Add Employee\n2. Show Employees\n3. Search Employee\n";
+                cout << "4. Update Employee\n5. Delete Employee\n6. Logout\n7. Exit\n";
+                choice = getch();
+                system("CLS");
+
+                switch (choice) {
+                    case '1': empData(); break;
+                    case '2': show(); break;
+                    case '3': searchEmp(); break;
+                    case '4': update(); break;
+                    case '5': deleteData(); break;
+                    case '6': system("CLS"); goto login;
+                    case '7': exit(0);
+                    default: cout << "Invalid option!\n";
+                }
+            }
+        } else {
+            cout << "Invalid credentials. Try again.\n";
+            Sleep(2000);
+            system("CLS");
+        }
+        login:;
+    }
+
+    return 0;
 }

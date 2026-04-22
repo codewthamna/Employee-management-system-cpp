@@ -8,7 +8,7 @@ The system supports full **CRUD operations** (Create, Read, Update, Delete) and 
 
 ---
 
-## 🛠️ Technologies U
+## 🛠️ Technologies Us
 - C++
 - Structures (`struct`)
 - Arrays
